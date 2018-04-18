@@ -13,6 +13,9 @@ public class Anuncio {
     Double Lat;
     Double Long;
 
+    public Anuncio() {
+    }
+
     public int getUid() {
         return uid;
     }
