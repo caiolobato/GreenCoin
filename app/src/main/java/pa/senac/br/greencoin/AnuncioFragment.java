@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+import pa.senac.br.greencoin.adapter.MyAdapter;
 import pa.senac.br.greencoin.model.Anuncio;
 
 public class AnuncioFragment extends android.support.v4.app.Fragment {
@@ -25,6 +26,10 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
     DatabaseReference myRef;
 
     private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+
     private List<Anuncio> mList;
 
     //FloatingActionButton novoAnuncioButton;
@@ -37,15 +42,21 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_anuncio,null); // ficou esse aqui pra possibilitar de dar os view.findVi...
 
 
+        //----
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_list);
 
-        mRecyclerView = view.findViewById(R.id.recycler_view_list);
-        mRecyclerView.setHasFixedSize(true); // tamanho do rv não vai mudar
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(llm);
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-
+        // specify an adapter (see also next example)
+        mAdapter = new MyAdapter(mList);
+        mRecyclerView.setAdapter(mAdapter);
+        //----
 
 
         return view;
