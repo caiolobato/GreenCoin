@@ -1,10 +1,13 @@
 package pa.senac.br.greencoin.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import pa.senac.br.greencoin.model.Anuncio;
 
 import java.util.List;
 
@@ -12,7 +15,9 @@ import pa.senac.br.greencoin.R;
 import pa.senac.br.greencoin.model.Anuncio;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    private String[] mDataset;
+
+    Context context;
+    //private String[] mDataset;
     private List<Anuncio> mList;
 
 
@@ -21,17 +26,32 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mTextView;
-        public ViewHolder(TextView v) {
-            super(v);
-            mTextView = v;
+        public TextView mTitulo;
+        public TextView mPreco;
+        public TextView mPeso;
+
+        public ImageView mImagem;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            mTitulo = itemView.findViewById(R.id.lista_titulo);
+            mPreco = itemView.findViewById(R.id.lista_preco);
+            mPeso = itemView.findViewById(R.id.lista_peso);
+
+            mImagem = itemView.findViewById(R.id.lista_imagem);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<Anuncio> list) {
-        mDataset = myDataset;
+//    public MyAdapter(List<Anuncio> list) {
+//        this.mList = list;
+//    }
+
+    public MyAdapter(Context context, List<Anuncio> list) {
+        this.mList = list;
+        this.context = context;
     }
+
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -51,13 +71,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset[position]);
+        //holder.mTextView.setText(mDataset[position]);
+
+        Anuncio anuncio = mList.get(position);
+
+        holder.mTitulo.setText(anuncio.getTitulo());
+        holder.mPreco.setText(anuncio.getPreco());
+        holder.mPeso.setText(anuncio.getPeso());
+
+        //Colocar as imagens com picasso? glide? Verificar!!! Por enquanto botei uma qualquer.
+        holder.mImagem.setImageResource(R.drawable.fb_logo);
+
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mList.size();
     }
 }

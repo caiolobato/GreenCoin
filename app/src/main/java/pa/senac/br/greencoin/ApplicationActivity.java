@@ -2,18 +2,17 @@ package pa.senac.br.greencoin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.UserHandle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -21,11 +20,24 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class ApplicationActivity extends AppCompatActivity
+import pa.senac.br.greencoin.Fragment.AnuncioFragment;
+import pa.senac.br.greencoin.Fragment.FiqueSabendoFragment;
+import pa.senac.br.greencoin.Fragment.MapaFragment;
+import pa.senac.br.greencoin.model.User;
+
+public class ApplicationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    private FirebaseUser firebaseUser;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +58,48 @@ public class ApplicationActivity extends AppCompatActivity
 
 
         mAuth = FirebaseAuth.getInstance();
+        myRef = FirebaseDatabase.getInstance().getReference();
+
+        firebaseUser = mAuth.getCurrentUser();
+
+
+        user = new User();
+        // pega as infos do usuario atual e joga num User.class
+        getUser(); // NO DEBUG  ISSO FUNCIONA.. VAI ENTENDER....
 
 
         //No inicio já abre no fragment de mapas
         getSupportFragmentManager().beginTransaction().replace(R.id.screen_area,new MapaFragment()).commit();
 
         }
+
+
+    public void getUser() {
+        final String userId = getUid();
+        myRef.child("users").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        user = dataSnapshot.getValue(User.class);
+
+                        if (user == null) {
+                            // User is null, error out
+                            Log.e("getUserLogged", "User " + userId + " is unexpectedly null");
+                        } else {
+                            // Write new post
+                            Log.d("getUserLogged", "User " + userId + " getted with sucess muchacho");
+                        }
+
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("getUserLogged", "getUser:onCancelled", databaseError.toException());
+                    }
+                }
+        );
+    }
 
     @Override
     public void onBackPressed() {
@@ -68,10 +116,17 @@ public class ApplicationActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.application, menu);
 
-        //Pegando o e-mail do Usuario e jogando pro NavDrawer Subtitle
-        String userEmail = mAuth.getCurrentUser().getEmail();
-        TextView subNavDrawer = findViewById(R.id.textView);
-        subNavDrawer.setText(userEmail);
+        //Pegando o usuario e e-mail do Usuario e jogando pro NavDrawer Title/Subtitle
+        //String username = myRef.child("users").child(user.toString()).child("username").getKey();
+
+//        String username = user.getUsername();
+//        String email = user.getEmail();
+
+        TextView headerNavDrawer = findViewById(R.id.nav_user);
+        TextView subNavDrawer = findViewById(R.id.nav_email);
+
+        headerNavDrawer.setText(user.getUsername()); // SE NAO FOR NO DEBUG ISSO AQUI RETORNA NULL
+        subNavDrawer.setText(user.getEmail());
 
         return true;
     }

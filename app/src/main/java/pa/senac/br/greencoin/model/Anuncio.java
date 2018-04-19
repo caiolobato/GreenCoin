@@ -10,8 +10,9 @@ public class Anuncio {
     String data;
     String peso;
     String preco;
-    Double Lat;
-    Double Long;
+    String categoria;
+    Double lat;
+    Double longi;
 
     public Anuncio() {
     }
@@ -64,20 +65,27 @@ public class Anuncio {
         this.data = data;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public Double getLat() {
-        return Lat;
+        return lat;
     }
 
     public void setLat(Double lat) {
-        Lat = lat;
+        this.lat = lat;
     }
 
-    public Double getLong() {
-        return Long;
+    public Double getLongi() {
+        return longi;
     }
 
-    public void setLong(Double aLong) {
-        Long = aLong;
+    public void setLongi(Double longi) {
+        this.longi = longi;
     }
-
 }

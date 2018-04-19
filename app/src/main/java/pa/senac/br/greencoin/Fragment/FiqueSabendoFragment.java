@@ -1,4 +1,4 @@
-package pa.senac.br.greencoin;
+package pa.senac.br.greencoin.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import pa.senac.br.greencoin.R;
 
 public class FiqueSabendoFragment extends android.support.v4.app.Fragment {
 

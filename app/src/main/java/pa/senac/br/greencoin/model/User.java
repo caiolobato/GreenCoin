@@ -1,24 +1,34 @@
 package pa.senac.br.greencoin.model;
 
+import java.io.Serializable;
+
 public class User {
 
+    String username;
     String email;
-    String user;
 
+    public User() {
+    }
+
+    public User(String username, String email) {
+        this.username = username;
+        this.email = email;
+
+    }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return this.username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
