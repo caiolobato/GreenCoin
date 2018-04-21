@@ -1,6 +1,5 @@
-package pa.senac.br.greencoin.Fragment;
+package pa.senac.br.greencoin.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import pa.senac.br.greencoin.R;
 

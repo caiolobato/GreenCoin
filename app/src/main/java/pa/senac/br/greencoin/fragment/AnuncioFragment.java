@@ -1,12 +1,10 @@
-package pa.senac.br.greencoin.Fragment;
+package pa.senac.br.greencoin.fragment;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import pa.senac.br.greencoin.BaseActivity;
 import pa.senac.br.greencoin.R;
 import pa.senac.br.greencoin.adapter.MyAdapter;
 import pa.senac.br.greencoin.model.Anuncio;
@@ -46,8 +43,6 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
 //    List<StudentDetails> list = new ArrayList<>(); //ok
 //    RecyclerView recyclerView; //ok
 //    RecyclerView.Adapter adapter ; //ok
-
-
 
     FloatingActionButton novoAnuncioButton;
 

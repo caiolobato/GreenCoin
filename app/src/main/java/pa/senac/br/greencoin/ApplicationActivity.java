@@ -2,7 +2,7 @@ package pa.senac.br.greencoin;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.UserHandle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,24 +20,27 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import pa.senac.br.greencoin.Fragment.AnuncioFragment;
-import pa.senac.br.greencoin.Fragment.FiqueSabendoFragment;
-import pa.senac.br.greencoin.Fragment.MapaFragment;
+import pa.senac.br.greencoin.fragment.AnuncioFragment;
+import pa.senac.br.greencoin.fragment.EditarContaFragment;
+import pa.senac.br.greencoin.fragment.FiqueSabendoFragment;
+import pa.senac.br.greencoin.fragment.MapaFragment;
 import pa.senac.br.greencoin.model.User;
 
 public class ApplicationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
-    private DatabaseReference myRef;
-    private FirebaseUser firebaseUser;
-    private User user;
+    public DatabaseReference myRef;
+    public FirebaseUser firebaseUser;
+    public User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +66,11 @@ public class ApplicationActivity extends BaseActivity
         firebaseUser = mAuth.getCurrentUser();
 
 
-        user = new User();
-        // pega as infos do usuario atual e joga num User.class
-        getUser(); // NO DEBUG  ISSO FUNCIONA.. VAI ENTENDER....
+        //user = new User();
+        // pega as infos do usuario atual e joga num User.class ... NO DEBUG  ISSO FUNCIONA..
+        getUser();
+
+
 
 
         //No inicio já abre no fragment de mapas
@@ -74,9 +79,11 @@ public class ApplicationActivity extends BaseActivity
         }
 
 
+
     public void getUser() {
         final String userId = getUid();
-        myRef.child("users").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(
+        user = new User();
+        myRef.child("users").child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
 
                     @Override
@@ -90,7 +97,6 @@ public class ApplicationActivity extends BaseActivity
                             // Write new post
                             Log.d("getUserLogged", "User " + userId + " getted with sucess muchacho");
                         }
-
 
                     }
                     @Override
@@ -119,14 +125,17 @@ public class ApplicationActivity extends BaseActivity
         //Pegando o usuario e e-mail do Usuario e jogando pro NavDrawer Title/Subtitle
         //String username = myRef.child("users").child(user.toString()).child("username").getKey();
 
-//        String username = user.getUsername();
-//        String email = user.getEmail();
+        //getUser();
+        String username = user.getUsername();
+        String email = user.getEmail();
+
 
         TextView headerNavDrawer = findViewById(R.id.nav_user);
         TextView subNavDrawer = findViewById(R.id.nav_email);
 
-        headerNavDrawer.setText(user.getUsername()); // SE NAO FOR NO DEBUG ISSO AQUI RETORNA NULL
-        subNavDrawer.setText(user.getEmail());
+
+        headerNavDrawer.setText(username); // SE NAO FOR NO DEBUG ISSO AQUI RETORNA NULL
+        subNavDrawer.setText(email); // posso pegar pelo firebaseuser isso aqui
 
         return true;
     }
@@ -161,6 +170,8 @@ public class ApplicationActivity extends BaseActivity
             fragment = new AnuncioFragment();
         } else if (id == R.id.nav_fiquesabendo) {
             fragment = new FiqueSabendoFragment();
+        } else if (id == R.id.nav_myAccount) {
+            fragment = new EditarContaFragment();
         } else if (id == R.id.nav_logout) {
             Toast.makeText(this,"Deslogou",Toast.LENGTH_LONG).show();
             mAuth.signOut();

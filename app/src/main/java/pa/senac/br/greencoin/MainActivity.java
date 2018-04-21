@@ -170,7 +170,7 @@ public class MainActivity extends BaseActivity implements
 
     // [START basic_write] // escreve o usuario no database
     private void writeNewUser(String userId, String name, String email) {
-        User user = new User(name, email);
+        User user = new User(userId, name, email);
         myRef.child("users").child(userId).setValue(user);
     }
     // [END basic_write]
