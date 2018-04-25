@@ -278,7 +278,7 @@ public class MainActivity extends BaseActivity implements
         //Codigo do video começa aqui
         mVideoView = findViewById(R.id.bgVideoView);
 
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.bg_video);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.bg_video2);
 
         mVideoView.setVideoURI(uri);
         mVideoView.start();
