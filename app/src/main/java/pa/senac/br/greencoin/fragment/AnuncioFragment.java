@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,6 +77,18 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
 //        progressDialog.show();// progress dialog desnecessario
 //-------
 
+        novoAnuncioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ir para o fragment de incluir anuncio
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.screen_area,new IncluirAnuncioFragment()).commit();
+
+            }
+        });
+
+
+
         return view;
     }
 
@@ -85,7 +98,7 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
 
         progressDialog = new ProgressDialog(getActivity());
 
-        progressDialog.setMessage("Loading Data from Firebase Database");
+        progressDialog.setMessage("Carregando Anúncios...");
 
         progressDialog.show();
 
@@ -93,7 +106,7 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
         //myRef =FirebaseDatabase.getInstance().getReference(MainActivity.Database_Path);
         myRef =FirebaseDatabase.getInstance().getReference();
 
-        myRef.child("Anuncio").addValueEventListener(new ValueEventListener() {
+        myRef.child("anuncio").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 mList = new ArrayList<Anuncio>();
@@ -118,8 +131,6 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
 
             }
         });
-
-
 
 
     }

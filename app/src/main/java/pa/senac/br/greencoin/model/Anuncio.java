@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class Anuncio {
 
-    int uid;
+    String uid;
+    String userUid;
     String titulo;
     boolean ativo;
     String data;
@@ -17,12 +18,20 @@ public class Anuncio {
     public Anuncio() {
     }
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getUserUid() {
+        return userUid;
+    }
+
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
     }
 
     public String getTitulo() {

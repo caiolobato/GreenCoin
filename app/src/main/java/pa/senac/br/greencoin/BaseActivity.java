@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
@@ -33,6 +37,16 @@ public class BaseActivity extends AppCompatActivity {
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
+
+    public String getDate(){
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("DD-MM-YYYY");
+        String formattedDate = df.format(c);
+        return formattedDate;
+    }
+
+
 
 
 
