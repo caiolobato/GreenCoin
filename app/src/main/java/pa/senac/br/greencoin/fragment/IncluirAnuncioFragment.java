@@ -81,6 +81,10 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
         anuncio.setUserUid(userId);
         anuncio.setData(activity.getDate());
         anuncio.setAtivo(true);
+        anuncio.setOwnerName(user.getUsername());
+
+        // colocar a uid da imagem
+        anuncio.setImagemUid(null);
 
         myRef.child("anuncio").child(key).setValue(anuncio);
 

@@ -29,6 +29,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public TextView mTitulo;
         public TextView mPreco;
         public TextView mPeso;
+        public TextView mAnunciante;
+        public TextView mData;
 
         public ImageView mImagem;
 
@@ -78,6 +80,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.mTitulo.setText(anuncio.getTitulo());
         holder.mPreco.setText(anuncio.getPreco());
         holder.mPeso.setText(anuncio.getPeso());
+        //holder.mAnunciante.setText(anuncio.getOwnerName());
+        //holder.mData.setText(anuncio.getData());
 
         //Colocar as imagens com picasso? glide? Verificar!!! Por enquanto botei uma qualquer.
         holder.mImagem.setImageResource(R.drawable.fb_logo);

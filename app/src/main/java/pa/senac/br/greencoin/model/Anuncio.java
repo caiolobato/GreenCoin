@@ -6,7 +6,9 @@ public class Anuncio {
 
     String uid;
     String userUid;
+    String ownerName;
     String titulo;
+    String imagemUid;
     boolean ativo;
     String data;
     String peso;
@@ -34,12 +36,28 @@ public class Anuncio {
         this.userUid = userUid;
     }
 
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
     public String getTitulo() {
         return titulo;
     }
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getImagemUid() {
+        return imagemUid;
+    }
+
+    public void setImagemUid(String imagemUid) {
+        this.imagemUid = imagemUid;
     }
 
     public boolean isAtivo() {
