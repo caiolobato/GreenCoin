@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public String getDate(){
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("DD-MM-YYYY");
+        SimpleDateFormat df = new SimpleDateFormat("dd/mm/yyyy");
         String formattedDate = df.format(c);
         return formattedDate;
     }

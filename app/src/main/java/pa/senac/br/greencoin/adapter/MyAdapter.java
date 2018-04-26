@@ -39,6 +39,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             mTitulo = itemView.findViewById(R.id.lista_titulo);
             mPreco = itemView.findViewById(R.id.lista_preco);
             mPeso = itemView.findViewById(R.id.lista_peso);
+            mAnunciante = itemView.findViewById(R.id.lista_anunciante);
+            mData = itemView.findViewById(R.id.lista_data);
 
             mImagem = itemView.findViewById(R.id.lista_imagem);
         }
@@ -61,7 +63,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                                                    int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_anuncio, parent, false);
+                .inflate(R.layout.item_anuncio_bkp, parent, false);
         // set the view's size, margins, paddings and layout parameters
         //...
         ViewHolder vh = new ViewHolder(v);
@@ -80,11 +82,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.mTitulo.setText(anuncio.getTitulo());
         holder.mPreco.setText(anuncio.getPreco());
         holder.mPeso.setText(anuncio.getPeso());
-        //holder.mAnunciante.setText(anuncio.getOwnerName());
-        //holder.mData.setText(anuncio.getData());
+        holder.mAnunciante.setText(anuncio.getOwnerName());
+        holder.mData.setText(anuncio.getData());
 
         //Colocar as imagens com picasso? glide? Verificar!!! Por enquanto botei uma qualquer.
-        holder.mImagem.setImageResource(R.drawable.fb_logo);
+        holder.mImagem.setImageResource(R.drawable.ic_launcher_foreground);
 
 
     }

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import pa.senac.br.greencoin.ApplicationActivity;
 import pa.senac.br.greencoin.R;
 import pa.senac.br.greencoin.adapter.MyAdapter;
 import pa.senac.br.greencoin.model.Anuncio;
@@ -29,6 +31,7 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
 
     FirebaseDatabase database;
     DatabaseReference myRef;
+    ApplicationActivity activity;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -47,6 +50,8 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
 
     FloatingActionButton novoAnuncioButton;
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,16 +59,12 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
         //View view = inflater.inflate(R.layout.fragment_anuncio,container,false); // esse aqui é o do thiego
         View view = inflater.inflate(R.layout.fragment_anuncio,null); // ficou esse aqui pra possibilitar de dar os view.findVi...
 
+        activity = (ApplicationActivity) getActivity();
+
         novoAnuncioButton = view.findViewById(R.id.novoAnuncioId);
 
         //--RecyclerView marotagens começa aqui--
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_list);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView = view.findViewById(R.id.recycler_view_list);
 
 
         //----
@@ -96,14 +97,14 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        progressDialog = new ProgressDialog(getActivity());
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
 
-        progressDialog.setMessage("Carregando Anúncios...");
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        progressDialog.show();
+        activity.showProgressDialog("Carregando Anúncios...");
 
-        //Assign FirebaseDatabase.getInstance().getReference to databaseReference and call database path name from MainActivity file.
-        //myRef =FirebaseDatabase.getInstance().getReference(MainActivity.Database_Path);
         myRef =FirebaseDatabase.getInstance().getReference();
 
         myRef.child("anuncio").addValueEventListener(new ValueEventListener() {
@@ -117,11 +118,12 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
                     mList.add(anuncio);
                 }
 
-                mAdapter = new MyAdapter(getActivity(), mList);
+                mAdapter = new MyAdapter(activity, mList);
 
                 mRecyclerView.setAdapter(mAdapter);
 
-                progressDialog.dismiss();
+//                progressDialog.dismiss();
+                activity.hideProgressDialog();
             }
 
             @Override
@@ -131,6 +133,7 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
 
             }
         });
+
 
 
     }
