@@ -34,6 +34,8 @@ import pa.senac.br.greencoin.helper.IncluirAnuncioHelper;
 import pa.senac.br.greencoin.model.Anuncio;
 import pa.senac.br.greencoin.model.User;
 
+import static android.app.Activity.RESULT_OK;
+
 public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
 
     ApplicationActivity activity;
@@ -45,6 +47,7 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
     Anuncio anuncio;
 
     private StorageReference mStorageRef;
+    public static final int GALLERY_INTENT = 2;
 
     Button publicarBtn, cancelarBtn, insereImagemBtn;
 
@@ -130,8 +133,33 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
     }
 
     private void inserirImagem() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
 
+        intent.setType("image/*");
+
+        startActivityForResult(intent,GALLERY_INTENT);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
+
+            activity.showProgressDialog("Enviando...");
+            Uri uri = data.getData();
+
+            StorageReference filepath = mStorageRef.child("Photos").child(uri.getLastPathSegment());
+
+            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(getContext(),"Upload done",Toast.LENGTH_LONG).show();
+                    activity.hideProgressDialog();
+                }
+            });
+
+        }
+
+    }
 }

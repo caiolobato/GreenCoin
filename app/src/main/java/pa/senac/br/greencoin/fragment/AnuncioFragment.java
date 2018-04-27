@@ -99,6 +99,7 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
         );
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
         //divisoria dos items - FIM
+
         mRecyclerView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
@@ -121,7 +122,7 @@ public class AnuncioFragment extends android.support.v4.app.Fragment {
 
                 maceteDoBugDoido();
 
-//                mRecyclerView.setAdapter(new MyAdapter(mList,getContext()));
+                //mRecyclerView.setAdapter(new MyAdapter(mList,getContext()));
 
             }
 

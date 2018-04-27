@@ -60,13 +60,13 @@ public class MyAdapter extends RecyclerView.Adapter {
         final Anuncio anuncio = mList.get(position);
 
         // glide quebrou o macete doido
-//        GlideApp
-//                .with(context)
-//                .load("https://firebasestorage.googleapis.com/v0/b/greencoin-87179.appspot.com/o/lixo.PNG?alt=media&token=3d7661f9-5e89-4c33-b401-e45b65cec151")
-//                .centerCrop()
-//                .placeholder(new ColorDrawable(Color.BLACK))
-//                .transition(withCrossFade())
-//                .into(holder.mImagem);
+        GlideApp
+                .with(context)
+                .load(getUrlImage(anuncio))
+                .centerCrop()
+                .placeholder(new ColorDrawable(Color.BLACK))
+                .transition(withCrossFade())
+                .into(holder.mImagem);
 
 
         holder.mTitulo.setText(anuncio.getTitulo());
@@ -76,7 +76,7 @@ public class MyAdapter extends RecyclerView.Adapter {
         holder.mData.setText(anuncio.getData());
 
 
-        holder.mImagem.setImageResource(R.drawable.nophoto);
+        //holder.mImagem.setImageResource(R.drawable.nophoto);
 
 
 
@@ -147,5 +147,13 @@ public class MyAdapter extends RecyclerView.Adapter {
         dialog.show();
     }
 
+    public String getUrlImage(Anuncio anuncio){
+        String url;
+
+        if(anuncio.getImagemUid()!=null) url = anuncio.getImagemUid();
+        else url = "R.drawable.nophoto";
+
+        return url;
+    }
 
 }
