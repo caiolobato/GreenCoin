@@ -5,12 +5,71 @@
     android:layout_width="match_parent"
     android:layout_height="150dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="193dp"
-        android:layout_height="136dp"
+
+    <!--<ConstraintLayout-->
+    <!--android:id="@+id/linearLayout"-->
+    <!--android:layout_width="193dp"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="4dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="1.0">-->
+
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/lista_titulo"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="Titulo"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textAppearance="@style/TextAppearance.AppCompat.Display1" />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/lista_preco"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="Preço" />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/lista_peso"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="Peso" />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/lista_anunciante"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="Anunciante" />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/lista_data"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="Data" />&ndash;&gt;-->
+    <!--</ConstraintLayout>-->
+
+    <ImageView
+        android:id="@+id/lista_imagem"
+        android:layout_width="140dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/side_nav_bar" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraint_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
@@ -26,42 +85,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Titulo"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/fonte_grande"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/lista_preco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Preço" />
+            android:layout_marginTop="2dp"
+            android:text="Preço"
+            android:textSize="@dimen/fonte_pequena"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lista_titulo" />
 
         <TextView
             android:id="@+id/lista_peso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Peso" />
+            android:layout_marginTop="2dp"
+            android:text="Peso"
+            android:textSize="@dimen/fonte_pequena"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lista_preco" />
 
         <TextView
             android:id="@+id/lista_anunciante"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Anunciante" />
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:text="Anunciante"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/lista_data"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Data" />
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Data"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/lista_imagem"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_marginBottom="8dp"
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/side_nav_bar" />
+        app:srcCompat="@android:drawable/screen_background_dark_transparent" />
+
 </android.support.constraint.ConstraintLayout>

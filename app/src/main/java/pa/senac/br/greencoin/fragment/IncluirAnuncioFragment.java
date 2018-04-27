@@ -1,18 +1,28 @@
 package pa.senac.br.greencoin.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +44,9 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
     IncluirAnuncioHelper helper;
     Anuncio anuncio;
 
-    Button publicarBtn;
+    private StorageReference mStorageRef;
+
+    Button publicarBtn, cancelarBtn, insereImagemBtn;
 
 
     @Nullable
@@ -51,9 +63,11 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
 
         anuncio = new Anuncio();
 
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         publicarBtn = view.findViewById(R.id.botao_publicar);
-
+        cancelarBtn = view.findViewById(R.id.botao_cancelar);
+        insereImagemBtn = view.findViewById(R.id.botao_insere);
 
 
         return view;
@@ -69,10 +83,25 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
                 incluirAnuncio();
             }
         });
-
+        cancelarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelar();
+            }
+        });
+        insereImagemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inserirImagem();
+            }
+        });
         //AQUI ROLA O CODIGO DA DO FRAGMENT (ACTIVITY)
 
     }
+
+
+
+
 
     private void incluirAnuncio() {
         String key = myRef.child("anuncio").push().getKey(); // é isso mesmo para pegar a key do novo child?
@@ -80,7 +109,7 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
         anuncio = helper.pegaCampos();
         anuncio.setUserUid(userId);
         anuncio.setData(activity.getDate());
-        anuncio.setAtivo(true);
+        //anuncio.setAtivo(true);
         anuncio.setOwnerName(user.getUsername());
 
         // colocar a uid da imagem
@@ -93,6 +122,14 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
         Toast.makeText(activity,"Anúncio publicado...",Toast.LENGTH_SHORT).show(); // PODE FAZER UM METODO PADRÃO PRA TOASTS NA BASE ACTIVITY
 
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.screen_area,new AnuncioFragment()).commit();
+
+    }
+
+    public void cancelar(){
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.screen_area,new AnuncioFragment()).commit();
+    }
+
+    private void inserirImagem() {
 
     }
 

@@ -9,13 +9,13 @@ public class Anuncio {
     String ownerName;
     String titulo;
     String imagemUid;
-    boolean ativo;
+    //boolean ativo;
     String data;
     String peso;
     String preco;
-    String categoria;
-    Double lat;
-    Double longi;
+    //String categoria;
+    //Double lat;
+    //Double longi;
 
     public Anuncio() {
     }
@@ -60,13 +60,13 @@ public class Anuncio {
         this.imagemUid = imagemUid;
     }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
+//    public boolean isAtivo() {
+//        return ativo;
+//    }
+//
+//    public void setAtivo(boolean ativo) {
+//        this.ativo = ativo;
+//    }
 
     public String getPeso() {
         return peso;
@@ -92,27 +92,27 @@ public class Anuncio {
         this.data = data;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public Double getLat() {
-        return lat;
-    }
-
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    public Double getLongi() {
-        return longi;
-    }
-
-    public void setLongi(Double longi) {
-        this.longi = longi;
-    }
+//    public String getCategoria() {
+//        return categoria;
+//    }
+//
+//    public void setCategoria(String categoria) {
+//        this.categoria = categoria;
+//    }
+//
+//    public Double getLat() {
+//        return lat;
+//    }
+//
+//    public void setLat(Double lat) {
+//        this.lat = lat;
+//    }
+//
+//    public Double getLongi() {
+//        return longi;
+//    }
+//
+//    public void setLongi(Double longi) {
+//        this.longi = longi;
+//    }
 }

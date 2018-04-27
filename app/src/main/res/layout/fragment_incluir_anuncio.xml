@@ -3,29 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <Button
+        android:id="@+id/botao_insere"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/darker_gray"
+        android:text="Inserir imagem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
-
-    <Button
-        android:id="@+id/uploadImageBtn"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
-        android:background="@android:drawable/ic_menu_upload"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_titulo"
@@ -42,7 +35,7 @@
         android:textSize="@dimen/fonte_normal"
         app:layout_constraintEnd_toStartOf="@+id/guideline21"
         app:layout_constraintStart_toStartOf="@+id/guideline20"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/botao_insere" />
 
     <TextView
         android:id="@+id/tv_titulo"
@@ -64,8 +57,8 @@
         android:layout_marginTop="16dp"
         android:background="@android:drawable/editbox_background_normal"
         android:ems="10"
-        android:hint="Digite aqui"
-        android:inputType="textPersonName"
+        android:hint="Digite aqui (Kilogramas)"
+        android:inputType="numberDecimal"
         android:paddingTop="20dp"
         android:textSize="@dimen/fonte_normal"
         app:layout_constraintEnd_toStartOf="@+id/guideline21"
@@ -93,8 +86,8 @@
         android:layout_marginTop="16dp"
         android:background="@android:drawable/editbox_background_normal"
         android:ems="10"
-        android:hint="Digite aqui"
-        android:inputType="textPersonName"
+        android:hint="Digite aqui (Reais)"
+        android:inputType="numberDecimal"
         android:paddingTop="20dp"
         android:textSize="@dimen/fonte_normal"
         app:layout_constraintEnd_toStartOf="@+id/guideline21"
@@ -140,5 +133,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_preco" />
+
+    <Button
+        android:id="@+id/botao_cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/create_account_button_bg"
+        android:backgroundTint="@android:color/darker_gray"
+        android:onClick="cancelar"
+        android:text="Cancelar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botao_publicar" />
 
 </android.support.constraint.ConstraintLayout>

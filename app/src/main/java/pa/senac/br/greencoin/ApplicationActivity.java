@@ -27,20 +27,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import pa.senac.br.greencoin.adapter.MyAdapter;
 import pa.senac.br.greencoin.fragment.AnuncioFragment;
 import pa.senac.br.greencoin.fragment.EditarContaFragment;
 import pa.senac.br.greencoin.fragment.FiqueSabendoFragment;
 import pa.senac.br.greencoin.fragment.MapaFragment;
+import pa.senac.br.greencoin.model.Anuncio;
 import pa.senac.br.greencoin.model.User;
 
+
 public class ApplicationActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
     public DatabaseReference myRef;
     public FirebaseUser firebaseUser;
     public User user;
-
+    public List<Anuncio> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +76,11 @@ public class ApplicationActivity extends BaseActivity
         // pega as infos do usuario atual e joga num User.class ... NO DEBUG  ISSO FUNCIONA..
         getUser();
 
-
-
-
         //No inicio já abre no fragment de mapas
         getSupportFragmentManager().beginTransaction().replace(R.id.screen_area,new MapaFragment()).commit();
 
         }
+
 
 
 
@@ -127,7 +131,8 @@ public class ApplicationActivity extends BaseActivity
 
         //getUser();
         String username = user.getUsername();
-        String email = user.getEmail();
+        //String email = user.getEmail();
+        String email = firebaseUser.getEmail();
 
 
         TextView headerNavDrawer = findViewById(R.id.nav_user);
@@ -193,4 +198,5 @@ public class ApplicationActivity extends BaseActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

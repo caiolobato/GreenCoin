@@ -1,99 +1,151 @@
 package pa.senac.br.greencoin.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.PopupMenu;
+
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+
+import pa.senac.br.greencoin.GlideApp;
+import pa.senac.br.greencoin.holder.MyViewHolder;
 import pa.senac.br.greencoin.model.Anuncio;
 
 import java.util.List;
 
 import pa.senac.br.greencoin.R;
-import pa.senac.br.greencoin.model.Anuncio;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter {
 
-    Context context;
-    //private String[] mDataset;
     private List<Anuncio> mList;
+    private Context context;
+    private MyViewHolder holder;
+
+    private int position;
 
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView mTitulo;
-        public TextView mPreco;
-        public TextView mPeso;
-        public TextView mAnunciante;
-        public TextView mData;
-
-        public ImageView mImagem;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            mTitulo = itemView.findViewById(R.id.lista_titulo);
-            mPreco = itemView.findViewById(R.id.lista_preco);
-            mPeso = itemView.findViewById(R.id.lista_peso);
-            mAnunciante = itemView.findViewById(R.id.lista_anunciante);
-            mData = itemView.findViewById(R.id.lista_data);
-
-            mImagem = itemView.findViewById(R.id.lista_imagem);
-        }
-    }
-
-    // Provide a suitable constructor (depends on the kind of dataset)
-//    public MyAdapter(List<Anuncio> list) {
-//        this.mList = list;
-//    }
-
-    public MyAdapter(Context context, List<Anuncio> list) {
-        this.mList = list;
+    public MyAdapter(List<Anuncio> mList, Context context) {
+        this.mList = mList;
         this.context = context;
     }
 
-
-    // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_anuncio_bkp, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        //...
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                      int viewType) {
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_anuncio, parent, false);
+
+        MyViewHolder holder = new MyViewHolder(view);
+
+        return holder;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        //holder.mTextView.setText(mDataset[position]);
 
-        Anuncio anuncio = mList.get(position);
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder,
+                                 final int position) {
+
+        holder = (MyViewHolder) viewHolder;
+
+        final Anuncio anuncio = mList.get(position);
+
+        // glide quebrou o macete doido
+//        GlideApp
+//                .with(context)
+//                .load("https://firebasestorage.googleapis.com/v0/b/greencoin-87179.appspot.com/o/lixo.PNG?alt=media&token=3d7661f9-5e89-4c33-b401-e45b65cec151")
+//                .centerCrop()
+//                .placeholder(new ColorDrawable(Color.BLACK))
+//                .transition(withCrossFade())
+//                .into(holder.mImagem);
+
 
         holder.mTitulo.setText(anuncio.getTitulo());
-        holder.mPreco.setText(anuncio.getPreco());
-        holder.mPeso.setText(anuncio.getPeso());
+        holder.mPreco.setText("Preço: R$ " + anuncio.getPreco());
+        holder.mPeso.setText("Peso: " + anuncio.getPeso() + " Kg");
         holder.mAnunciante.setText(anuncio.getOwnerName());
         holder.mData.setText(anuncio.getData());
 
-        //Colocar as imagens com picasso? glide? Verificar!!! Por enquanto botei uma qualquer.
-        holder.mImagem.setImageResource(R.drawable.ic_launcher_foreground);
+
+        holder.mImagem.setImageResource(R.drawable.nophoto);
+
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //creating a popup menu
+                PopupMenu popup = new PopupMenu(context, holder.mImagem);
+                //inflating menu from xml resource
+                popup.inflate(R.menu.menu_anuncios);
+                //adding click listener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.menu1:
+                                //Toast.makeText(context, "+++ Informações", Toast.LENGTH_SHORT).show();
+                                verContato(anuncio);
+                                break;
+//                            case R.id.menu2:
+//                                //handle menu2 click
+//                                break;
+//                            case R.id.menu3:
+//                                //handle menu3 click
+//                                break;
+                        }
+                        return false;
+                    }
+                });
+                //displaying the popup
+                popup.show();
+            }
+        });
 
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+
     @Override
     public int getItemCount() {
         return mList.size();
     }
+
+    private void verContato(Anuncio anuncio) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setTitle("Contato")
+                .setMessage("E-mail: " + anuncio.getOwnerName() + "@gmail.com" + "\nTelefone: 982733346") // to passando no hard code, mentindo no e-mail e telefone
+                .setIcon(android.R.drawable.ic_menu_info_details)
+                .setPositiveButton("Ligar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Uri uri = Uri.parse("tel:982733346"); // to passando no hardcode, falta ajeitar
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL,uri);
+
+                        context.startActivity(callIntent);
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // só fecha o dialog
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
 }
