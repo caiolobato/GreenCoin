@@ -9,17 +9,39 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import pa.senac.br.greencoin.R;
 
-public class MapaFragment extends android.support.v4.app.Fragment {
+public class MapaFragment extends android.support.v4.app.Fragment
+        implements OnMapReadyCallback {
 
-    TextView texto;
-    Switch switchB;
+    GoogleMap mGoogleMap;
+    MapView mMapView;
+    View mView;
+
+
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+
+
         return inflater.inflate(R.layout.fragment_mapa,null);
+
+
+
+
     }
 
     @Override
@@ -27,18 +49,28 @@ public class MapaFragment extends android.support.v4.app.Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //USAR O QUE VAI ROLAR NA FRAGMENT AQUI!!!
-        texto = view.findViewById(R.id.textViewMapa);
-        switchB = view.findViewById(R.id.switchMapa);
 
-        switchB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(switchB.isChecked()) texto.setText("Mapa do Mestre Orlando");
-                else texto.setText("Tela de Mapas");
-            }
-        });
+        mMapView = view.findViewById(R.id.map);
+
+        if (mMapView != null){
+            mMapView.onCreate(null);
+            mMapView.onResume();
+            mMapView.getMapAsync(this);
+        }
 
 
+    }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        MapsInitializer.initialize(getContext());
+
+        mGoogleMap = googleMap;
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(-1.2989571909085644, -48.46226485))).setTitle("Belém do GreenCoin");
+        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(-1.2989571909085644, -48.46226485)).zoom(16).bearing(0).tilt(45).build();
+
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
     }
 }
