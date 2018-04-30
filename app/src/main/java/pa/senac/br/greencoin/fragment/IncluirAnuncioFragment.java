@@ -2,6 +2,8 @@ package pa.senac.br.greencoin.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,13 +31,16 @@ import java.util.Calendar;
 import java.util.Date;
 
 import pa.senac.br.greencoin.ApplicationActivity;
+
+import pa.senac.br.greencoin.GlideApp;
 import pa.senac.br.greencoin.R;
-import pa.senac.br.greencoin.helper.EditarContaHelper;
+
 import pa.senac.br.greencoin.helper.IncluirAnuncioHelper;
 import pa.senac.br.greencoin.model.Anuncio;
 import pa.senac.br.greencoin.model.User;
 
 import static android.app.Activity.RESULT_OK;
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
 
@@ -48,9 +54,11 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
 
     private StorageReference mStorageRef;
     public static final int GALLERY_INTENT = 2;
+    String imageUrl;
+
 
     Button publicarBtn, cancelarBtn, insereImagemBtn;
-
+    ImageView imagemUpload;
 
     @Nullable
     @Override
@@ -71,7 +79,7 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
         publicarBtn = view.findViewById(R.id.botao_publicar);
         cancelarBtn = view.findViewById(R.id.botao_cancelar);
         insereImagemBtn = view.findViewById(R.id.botao_insere);
-
+        imagemUpload = view.findViewById(R.id.foto_upload);
 
         return view;
     }
@@ -116,7 +124,7 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
         anuncio.setOwnerName(user.getUsername());
 
         // colocar a uid da imagem
-        anuncio.setImagemUid(null);
+        anuncio.setImagemUid(imageUrl);
 
         myRef.child("anuncio").child(key).setValue(anuncio);
 
@@ -149,12 +157,27 @@ public class IncluirAnuncioFragment extends android.support.v4.app.Fragment {
             activity.showProgressDialog("Enviando...");
             Uri uri = data.getData();
 
-            StorageReference filepath = mStorageRef.child("Photos").child(uri.getLastPathSegment());
+            final StorageReference filepath = mStorageRef.child(uri.getLastPathSegment());
 
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getContext(),"Upload done",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Foto enviada",Toast.LENGTH_LONG).show();
+
+                    Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+                    imageUrl = downloadUri.toString();
+
+                    anuncio.setImagemUid(imageUrl);
+
+                    GlideApp
+                            .with(activity)
+                            .load(imageUrl)
+                            .centerCrop()
+                            .placeholder(android.R.drawable.ic_menu_report_image)
+                            .transition(withCrossFade())
+                            .into(imagemUpload);
+
+
                     activity.hideProgressDialog();
                 }
             });

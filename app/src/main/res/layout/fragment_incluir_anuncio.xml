@@ -3,22 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
 
     <Button
         android:id="@+id/botao_insere"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="60dp"
+        android:layout_height="55dp"
+        android:background="@android:drawable/ic_menu_upload"
+        app:layout_constraintBottom_toBottomOf="@+id/foto_upload"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10" />
+
+    <ImageView
+        android:id="@+id/foto_upload"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="@android:color/darker_gray"
-        android:text="Inserir imagem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/nophoto" />
 
     <EditText
         android:id="@+id/et_titulo"
@@ -35,7 +41,7 @@
         android:textSize="@dimen/fonte_normal"
         app:layout_constraintEnd_toStartOf="@+id/guideline21"
         app:layout_constraintStart_toStartOf="@+id/guideline20"
-        app:layout_constraintTop_toBottomOf="@+id/botao_insere" />
+        app:layout_constraintTop_toBottomOf="@+id/foto_upload" />
 
     <TextView
         android:id="@+id/tv_titulo"
@@ -148,5 +154,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/botao_publicar" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="301dp" />
 
 </android.support.constraint.ConstraintLayout>

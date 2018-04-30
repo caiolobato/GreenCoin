@@ -60,9 +60,11 @@ public class MyAdapter extends RecyclerView.Adapter {
         final Anuncio anuncio = mList.get(position);
 
         // glide quebrou o macete doido
-        GlideApp
+
+        if (anuncio.getImagemUid()==null) holder.mImagem.setImageResource(R.drawable.nophoto);
+        else GlideApp
                 .with(context)
-                .load(getUrlImage(anuncio))
+                .load(anuncio.getImagemUid())
                 .centerCrop()
                 .placeholder(new ColorDrawable(Color.BLACK))
                 .transition(withCrossFade())
@@ -147,13 +149,13 @@ public class MyAdapter extends RecyclerView.Adapter {
         dialog.show();
     }
 
-    public String getUrlImage(Anuncio anuncio){
-        String url;
-
-        if(anuncio.getImagemUid()!=null) url = anuncio.getImagemUid();
-        else url = "R.drawable.nophoto";
-
-        return url;
-    }
+//    public String getUrlImage(Anuncio anuncio){
+//        String url;
+//
+//        if(anuncio.getImagemUid()!=null) url = anuncio.getImagemUid();
+//        else url = "R.drawable.nophoto";
+//
+//        return url;
+//    }
 
 }
